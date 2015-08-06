@@ -4,18 +4,13 @@
 // but you don't so you're going to write it from scratch:
 
 var stringifyJSON = function(obj) {
-  // your code goes here
-  // Should be same as: return JSON.stringify(obj);
-/*  console.log("-------------------------------------------------------");
-  console.log("The obj is: "+ obj);
-  console.log("The obj is of type: "+ typeof(obj))
-  console.log("The Stringified Actual is: "+JSON.stringify(obj));*/
-  console.log(obj);
-
+  /*ALL OBJECT TYPES*/
   if (typeof(obj) === 'object') {
+  	// watch for null
   	if (obj === null) {
   		return 'null';
   	}
+  	// if array, iterate thru array and append stringified elements
   	if (Array.isArray(obj)) {
   		var result = [];
   		for (var i = 0; i < obj.length; i++) {
@@ -23,9 +18,12 @@ var stringifyJSON = function(obj) {
   		}
   		return ("["+result.toString()+"]");
   	}
+
+  	// if Object isn't null or array, iterate thru key/value pairs
   	else {
   		var objResult = "";
   		for (var key in obj) {
+  			// ensure value is not function and key is defined, then append as string
   			if ((typeof(obj[key]) !== "function") && (key !== "undefined")) {
   				console.log("the key is: " +key);
 	  			var newKey = stringifyJSON(key);
@@ -33,14 +31,16 @@ var stringifyJSON = function(obj) {
 	  			objResult = objResult.concat(newKey+":"+newVal+",");
   			}
   		}
+  		// is object was empty, return brackets
   		if (objResult.length === 0) {
   			return '{}';
   		}
+  		// take off last comma and return with brackets
   		objResult = objResult.substring(0, objResult.length-1);
   		return ("{"+objResult+"}");
   	}
   }
-
+  // return string nested in string
   if (typeof(obj) === 'string') {
   	var emptyStr = "\"";
   	emptyStr = emptyStr.concat(obj);
@@ -48,15 +48,8 @@ var stringifyJSON = function(obj) {
 	return emptyStr;
   }
 
-  if (typeof(obj) === 'function') {
-  	return;
-  }
-
-
+  // all other cases convert obj to string
   else {
-  	if (obj === undefined) {
-  		return "";
-  	}
   	return (obj.toString());
   }
 };
