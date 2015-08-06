@@ -25,7 +25,6 @@ var stringifyJSON = function(obj) {
   		for (var key in obj) {
   			// ensure value is not function and key is defined, then append as string
   			if ((typeof(obj[key]) !== "function") && (key !== "undefined")) {
-  				console.log("the key is: " +key);
 	  			var newKey = stringifyJSON(key);
 	  			var newVal = stringifyJSON(obj[key]);
 	  			objResult = objResult.concat(newKey+":"+newVal+",");
