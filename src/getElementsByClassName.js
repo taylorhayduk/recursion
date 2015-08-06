@@ -6,5 +6,22 @@
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className
 ){
-  // your code here
+  var body = document.body;
+  var result = [];
+  var getChildClasses = function(parent, className) {
+  	if (parent.classList.contains(className)) {
+  		result[result.length] = parent;
+  	}
+  	if (parent.hasChildNodes()) {
+  		var children = parent.childNodes;
+  		_.each(children, function(child){
+  			if (child.nodeType !== 3) {
+  			  getChildClasses(child, className);
+  			}
+  		});
+  	  }
+    };
+
+  getChildClasses(body, className);
+  return result;
 };
